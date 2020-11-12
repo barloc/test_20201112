@@ -1,5 +1,5 @@
 ---
-- name: restart zk
+- name: restart kafka
   systemd:
     name: "{{ item }}"
     enabled: yes

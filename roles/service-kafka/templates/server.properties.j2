@@ -2,15 +2,16 @@
 
 # default: 2.2
 # Specify which version of the inter-broker protocol will be used. This is typically bumped after all brokers were upgraded to a new version. Example of some valid values are: 0.8.0, 0.8.1, 0.8.1.1, 0.8.2, 0.8.2.0, 0.8.2.1, 0.9.0.0, 0.9.0.1 Check ApiVersion for the full list.
-inter.broker.protocol.version=2.3
+inter.broker.protocol.version={{ kafka_broker_version }}
 
 # default: 2.2
 # Specify the message format version the broker will use to append messages to the logs. The value should be a valid ApiVersion. Some examples are: 0.8.2, 0.9.0.0, 0.10.0, check ApiVersion for more details. By setting a particular message format version, the user is certifying that all the existing messages on disk are smaller or equal than the specified version. Setting this value incorrectly will cause consumers with older versions to break as they will receive messages with a format that they don't understand.
-log.message.format.version=2.3
+log.message.format.version={{ kafka_broker_version }}
 
 # default: -1
 # Each broker is uniquely identified by a non-negative integer id. This id serves as the broker's "name" and allows the broker to be moved to a different host/port without confusing consumers. You can choose any number you like so long as it is unique.
-broker.id=1001
+
+broker.id={{ broker_id }}
 
 # default: null
 # Rack of the broker. This will be used in rack aware replication assignment for fault tolerance. Examples: `RACK1`, `us-east-1d`
@@ -23,7 +24,7 @@ reserved.broker.max.id=1010
 
 # default: null
 # Specifies the ZooKeeper connection string in the form hostname:port, where hostname and port are the host and port for a node in your ZooKeeper cluster. To allow connecting through other ZooKeeper nodes when that host is down you can also specify multiple hosts in the form hostname1:port1,hostname2:port2,hostname3:port3.  ZooKeeper also allows you to add a "chroot" path which will make all kafka data for this cluster appear under a particular path. This is a way to setup multiple Kafka clusters or other applications on the same ZooKeeper cluster. To do this give a connection string in the form hostname1:port1,hostname2:port2,hostname3:port3/chroot/path which would put all this cluster's data under the path /chroot/path. Note that you must create this path yourself prior to starting the broker and consumers must use the same connection string.
-zookeeper.connect=127.0.0.1:2181
+zookeeper.connect={{ kafka_zk_connect_string }}
 
 
 # default: /tmp/kafka-logs

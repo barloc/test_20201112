@@ -29,3 +29,7 @@ broker_settings:
   - broker_id: 1003
     listen_port: 9096
     listen_ssl_port: 9097
+
+# config settings
+kafka_broker_version: "2.3"
+kafka_zk_connect_string: "127.0.0.1:2181"
