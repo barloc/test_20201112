@@ -1,0 +1,32 @@
+---
+- name: upload kafka env
+  template:
+    src: "kafka.j2"
+    dest: "{{ kafka_env_path }}"
+
+- name: upload apps configs
+  template:
+    src: "server.properties.j2"
+    dest: "{{kafka_conf_dir}}{{ item }}/config/server.properties"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_user }}"
+    mode: "0755"
+  loop:
+    - "{{ broker_settings.broker_id }}"
+
+- name: upload log4j configs
+  template:
+    src: "log4j.properties.j2"
+    dest: "{{kafka_conf_dir}}{{ item }}/config/log4j.properties"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_user }}"
+    mode: "0755"
+  loop:
+    - "{{ broker_settings.broker_id }}"
+
+- name: upload services configs
+  template:
+    src: "kafka.service.j2"
+    dest: "/etc/systemd/system/kafka@.service"
+  notify:
+    - restart kafka

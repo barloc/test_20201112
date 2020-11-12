@@ -1,0 +1,31 @@
+# source binary settings
+version: "2.3.0"
+version_full: "kafka_2.12-{{ version }}"
+url: "http://apache-mirror.rbc.ru/pub/apache/kafka/{{ version }}/{{ version_full }}.tgz"
+
+# service settings
+limit_no_files: 100000
+kafka_bin_path: "/usr/lib/kafka"
+kafka_env_path: "/etc/default/kafka"
+kafka_user: "kafka"
+kafka_dest_dir: "/usr/lib/kafka"
+
+software:
+  - openjdk-8-jdk
+  - openjdk-8-jre
+
+# path settings
+kafka_conf_dir: "/etc/kafka_"
+kafka_log_dir: "/var/log/kafka"
+kafka_data_dir: "/var/lib/kafka"
+
+broker_settings:
+  - broker_id: 1001
+    listen_port: 9092
+    listen_ssl_port: 9093
+  - broker_id: 1002
+    listen_port: 9094
+    listen_ssl_port: 9095
+  - broker_id: 1003
+    listen_port: 9096
+    listen_ssl_port: 9097

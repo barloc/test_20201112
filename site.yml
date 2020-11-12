@@ -1,0 +1,8 @@
+---
+- name: install kafka cluster
+  hosts: kafka-cluster-01
+  become: yes
+
+  roles:
+    - service-zookeeper
+    - service-kafka

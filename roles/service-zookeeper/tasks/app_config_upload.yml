@@ -1,0 +1,7 @@
+---
+- name: upload zk env
+  template:
+    src: "zoo.cfg.j2"
+    dest: "{{ zk_conf_path }}"
+  notify:
+    - restart zk

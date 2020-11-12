@@ -1,0 +1,6 @@
+---
+- name: add user
+  user:
+    name: "{{ kafka_user }}"
+    shell: /sbin/nologin
+    state: present

@@ -1,0 +1,6 @@
+---
+- name: restart kafka
+  systemd:
+    name: "zookeeper"
+    enabled: yes
+    state: restarted

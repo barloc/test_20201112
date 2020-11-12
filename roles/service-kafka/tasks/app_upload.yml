@@ -1,0 +1,22 @@
+---
+- name: download tgz archive
+  get_url:
+    url: "{{ url }}"
+    dest: "/tmp/"
+
+- name: extract archive
+  unarchive:
+    src: "/tmp/{{ version_full }}.tgz"
+    dest: "/opt/"
+    remote_src: yes
+    owner: "{{ kafka_user }}"
+
+- name: move app to target dir
+  file:
+    src: "/opt/{{ version_full }}"
+    dest: "{{ kafka_bin_path }}"
+    owner: "{{ kafka_user }}"
+    group: "{{ kafka_user }}"
+    mode: 0755
+    state: link
+    force: yes

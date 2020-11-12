@@ -1,0 +1,6 @@
+---
+- name: install needed software
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ software }}"

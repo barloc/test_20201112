@@ -1,0 +1,8 @@
+software:
+  - zookeeper
+  - zookeeperd
+
+# service settings
+zk_data_dir: "/var/lib/zookeeper"
+zk_port: 2181
+zk_conf_path: "/etc/zookeeper/conf/zoo.cfg"

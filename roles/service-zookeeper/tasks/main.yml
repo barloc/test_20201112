@@ -1,0 +1,7 @@
+---
+
+- import_tasks: software_install.yml
+  tags: [software_install]
+
+- import_tasks: app_config_upload.yml
+  tags: [app_config_upload]

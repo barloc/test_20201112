@@ -1,0 +1,9 @@
+---
+- name: restart kafka
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+    daemon_reload: yes
+  loop:
+    - "{{ broker_settings.broker_id }}"

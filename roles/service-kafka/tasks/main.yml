@@ -1,0 +1,15 @@
+---
+- import_tasks: user_add.yml
+  tags: [user_add]
+
+- import_tasks: software_install.yml
+  tags: [software_install]
+
+- import_tasks: dirs_create.yml
+  tags: [dirs_create]
+
+- import_tasks: app_upload.yml
+  tags: [app_upload]
+
+- import_tasks: app_config_upload.yml
+  tags: [app_config_upload]
