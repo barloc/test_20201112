@@ -44,7 +44,7 @@ listeners=PLAINTEXT://0.0.0.0:{{ item.listen_port }},SSL://0.0.0.0:{{ item.liste
 
 # default: null
 # Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for `listeners` will be used.
-advertised.listeners=PLAINTEXT://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_port }},SSL://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_port }}
+advertised.listeners=PLAINTEXT://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_port }},SSL://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_ssl_port }}
 
 # default: 100 * 1024
 # The SO_SNDBUFF buffer the server prefers for socket connections.
