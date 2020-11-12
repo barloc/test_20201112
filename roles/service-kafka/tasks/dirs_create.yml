@@ -11,7 +11,7 @@
 
 - name: create log dirs
   file:
-    path: "{{kafka_conf_dir}}{{ item.broker_id }}"
+    path: "{{kafka_log_dir}}{{ item.broker_id }}"
     state: directory
     mode: 0755
     owner: "{{ kafka_user }}"
