@@ -7,22 +7,22 @@
 - name: upload apps configs
   template:
     src: "server.properties.j2"
-    dest: "{{kafka_conf_dir}}{{ item }}/config/server.properties"
+    dest: "{{kafka_conf_dir}}{{ item.broker_id }}/config/server.properties"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_user }}"
     mode: "0755"
-  loop:
-    - "{{ broker_settings.broker_id }}"
+  with_items:
+    - "{{ broker_settings }}"
 
 - name: upload log4j configs
   template:
     src: "log4j.properties.j2"
-    dest: "{{kafka_conf_dir}}{{ item }}/config/log4j.properties"
+    dest: "{{kafka_conf_dir}}{{ item.broker_id }}/config/log4j.properties"
     owner: "{{ kafka_user }}"
     group: "{{ kafka_user }}"
     mode: "0755"
-  loop:
-    - "{{ broker_settings.broker_id }}"
+  with_items:
+    - "{{ broker_settings }}"
 
 - name: upload services configs
   template:

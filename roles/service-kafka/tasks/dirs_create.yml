@@ -1,30 +1,30 @@
 ---
 - name: create conf dirs
   file:
-    path: "{{kafka_conf_dir}}{{ item }}/config"
+    path: "{{kafka_conf_dir}}{{ item.broker_id }}/config"
     state: directory
     mode: 0755
     owner: "{{ kafka_user }}"
     group: "{{ kafka_user }}"
-  loop:
-    - "{{ broker_settings.broker_id }}"
+  with_items:
+    - "{{ broker_settings }}"
 
 - name: create log dirs
   file:
-    path: "{{kafka_conf_dir}}{{ item }}"
+    path: "{{kafka_conf_dir}}{{ item.broker_id }}"
     state: directory
     mode: 0755
     owner: "{{ kafka_user }}"
     group: "{{ kafka_user }}"
-  loop:
-    - "{{ broker_settings.broker_id }}"
+  with_items:
+    - "{{ broker_settings }}"
 
 - name: create data dirs
   file:
-    path: "{{kafka_data_dir}}{{ item }}"
+    path: "{{kafka_data_dir}}{{ item.broker_id }}"
     state: directory
     mode: 0755
     owner: "{{ kafka_user }}"
     group: "{{ kafka_user }}"
-  loop:
-    - "{{ broker_settings.broker_id }}"
+  with_items:
+    - "{{ broker_settings }}"
