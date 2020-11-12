@@ -33,3 +33,4 @@ broker_settings:
 # config settings
 kafka_broker_version: "2.3"
 kafka_zk_connect_string: "127.0.0.1:2181"
+kafka_max_broker_id: "1010"

@@ -11,16 +11,15 @@ log.message.format.version={{ kafka_broker_version }}
 # default: -1
 # Each broker is uniquely identified by a non-negative integer id. This id serves as the broker's "name" and allows the broker to be moved to a different host/port without confusing consumers. You can choose any number you like so long as it is unique.
 
-broker.id={{ broker_id }}
+broker.id={{ item.broker_id }}
 
 # default: null
 # Rack of the broker. This will be used in rack aware replication assignment for fault tolerance. Examples: `RACK1`, `us-east-1d`
 broker.rack={{ kafka_rack }}
 
-
 # default: 1000
 # Max number that can be used for a broker.id
-reserved.broker.max.id=1010
+reserved.broker.max.id={{ kafka_max_broker_id }}
 
 # default: null
 # Specifies the ZooKeeper connection string in the form hostname:port, where hostname and port are the host and port for a node in your ZooKeeper cluster. To allow connecting through other ZooKeeper nodes when that host is down you can also specify multiple hosts in the form hostname1:port1,hostname2:port2,hostname3:port3.  ZooKeeper also allows you to add a "chroot" path which will make all kafka data for this cluster appear under a particular path. This is a way to setup multiple Kafka clusters or other applications on the same ZooKeeper cluster. To do this give a connection string in the form hostname1:port1,hostname2:port2,hostname3:port3/chroot/path which would put all this cluster's data under the path /chroot/path. Note that you must create this path yourself prior to starting the broker and consumers must use the same connection string.
@@ -29,15 +28,8 @@ zookeeper.connect={{ kafka_zk_connect_string }}
 
 # default: /tmp/kafka-logs
 # A comma-separated list of one or more directories in which Kafka data is stored. Each new partition that is created will be placed in the directory which currently has the fewest partitions.
-log.dirs=/var/lib/kafka1001
 
-# default: 9092
-# The port on which the server accepts client connections.
-#
-# Kafka 0.10.0
-# DEPRECATED: only used when `listeners` is not set. Use `listeners` instead. the port to listen and accept connections on
-# port=9092
-
+log.dirs={{ kafka_data_dir }}{{ item.broker_id }}
 
 # The number of network threads that the server uses for handling network requests. You probably don't need to change this.
 num.network.threads=2
@@ -45,16 +37,14 @@ num.network.threads=2
 # The number of I/O threads that the server uses for executing requests. You should have at least as many threads as you have disks.
 num.io.threads=2
 
-
-
 # default: null
 # Listener List - Comma-separated list of URIs we will listen on and their protocols. Specify hostname as 0.0.0.0 to bind to all interfaces. Leave hostname empty to bind to default interface. Examples of legal listener lists: PLAINTEXT://myhost:9092,TRACE://:9091 PLAINTEXT://0.0.0.0:9092, TRACE://localhost:9093
-listeners=PLAINTEXT://0.0.0.0:9092,SSL://0.0.0.0:9093
+
+listeners=PLAINTEXT://0.0.0.0:{{ item.listen_port }},SSL://0.0.0.0:{{ item.listen_ssl_port }}
 
 # default: null
 # Listeners to publish to ZooKeeper for clients to use, if different than the listeners above. In IaaS environments, this may need to be different from the interface to which the broker binds. If this is not set, the value for `listeners` will be used.
-advertised.listeners=PLAINTEXT://10.236.31.13:9092,SSL://10.236.31.13:9093
-
+advertised.listeners=PLAINTEXT://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_port }},SSL://{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}:{{ item.listen_port }}
 
 # default: 100 * 1024
 # The SO_SNDBUFF buffer the server prefers for socket connections.
@@ -74,11 +64,6 @@ num.partitions=8
 # default: 1024 * 1024 * 1024
 # The log for a topic partition is stored as a directory of segment files. This setting controls the size to which a segment file will grow before a new segment is rolled over in the log. This setting can be overridden on a per-topic basis (see the per-topic configuration section).
 log.segment.bytes=1073741824
-
-
-
-
-
 
 # default: 7 days
 # The amount of time to keep a log segment before it is deleted, i.e. the default data retention window for all topics. Note that if both log.retention.minutes and log.retention.bytes are both set we delete a segment when either limit is exceeded. This setting can be overridden on a per-topic basis (see the per-topic configuration section).
