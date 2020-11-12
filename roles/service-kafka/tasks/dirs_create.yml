@@ -1,7 +1,7 @@
 ---
 - name: create conf dirs
   file:
-    path: "{{kafka_conf_dir}}{{ item.broker_id }}/config"
+    path: "{{kafka_conf_dir}}_{{ item.broker_id }}/config"
     state: directory
     mode: 0755
     owner: "{{ kafka_user }}"
